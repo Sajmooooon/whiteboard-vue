@@ -1,12 +1,14 @@
 <template>
-  <div class="sticker" >
-    <i class="sticker-del fa fa-close" @click="removeSticker"></i>
-    <div class="sticker-inside">
-      <div class="sticker-head">
-        <h3>Title</h3>
-      </div>
-      <div class="sticker-body">
-        <p>Text</p>
+  <div class="sticker">
+    <div class="sticker-out">
+      <i class="sticker-del fa fa-close"></i>
+      <div class="sticker-inside">
+        <div class="sticker-head">
+          <h3>Title</h3>
+        </div>
+        <div class="sticker-body">
+          <p>Text</p>
+        </div>
       </div>
     </div>
   </div>
