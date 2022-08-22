@@ -1,7 +1,7 @@
 <template>
   <div class="sticker">
     <div class="sticker-out">
-      <i class="sticker-del fa fa-close"></i>
+      <i class="sticker-del fa fa-close" @click="removeSticker"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
           <h3>{{title}}</h3>
@@ -25,8 +25,16 @@ export default {
     text:{
       type: String,
       default: 'test',
+    },
+    remove:{
+      type: Object,
     }
-
+  },
+  methods: {
+    removeSticker(){
+      this.$emit('remove-sticker',this.remove)
+      console.log(this.remove)
+    }
   }
 }
 </script>
