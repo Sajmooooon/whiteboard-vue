@@ -7,7 +7,9 @@
         :title="sticker.title"
         :text="sticker.text"
     />
-    <create-nav-bar/>
+    <create-nav-bar
+        @add-sticker="addSticker($event)"
+    />
   </div>
 </template>
 
@@ -31,6 +33,11 @@ export default {
     CreateNavBar,
     CreateTopBar
   },
+  methods:{
+    addSticker(obj){
+      this.stickers.push(obj)
+    }
+  }
 }
 </script>
 

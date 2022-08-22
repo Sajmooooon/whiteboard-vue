@@ -5,7 +5,7 @@
         <li class="navbar-item center">
           <i class="navbar-item-icon center fa fa-hand-grab-o"></i>
         </li>
-        <li class="navbar-item center">
+        <li class="navbar-item center" @click="createNewSticker">
           <i class="navbar-item-icon center fa fa-plus"></i>
         </li>
       </ul>
@@ -15,8 +15,21 @@
 
 <script>
 export default {
+  name: "CreateNavBar",
+  data(){
+    return{
+      newSticker: {
+        title: 'New Sticker Title',
+        text: 'New Sticker Text',
+      }
+    }
+  },
+  methods:{
+    createNewSticker(){
+      this.$emit('add-sticker',this.newSticker)
 
-  name: "CreateNavBar"
+    }
+  }
 }
 </script>
 
