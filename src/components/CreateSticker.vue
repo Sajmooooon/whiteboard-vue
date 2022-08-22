@@ -4,10 +4,10 @@
       <i class="sticker-del fa fa-close"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
-          <h3>Title</h3>
+          <h3>{{title}}</h3>
         </div>
         <div class="sticker-body">
-          <p>Text</p>
+          <p>{{text}}</p>
         </div>
       </div>
     </div>
@@ -16,7 +16,18 @@
 
 <script>
 export default {
-  name: "CreateSticker"
+  name: "CreateSticker",
+  props: {
+    title:{
+      type: String,
+      default: 'test',
+    },
+    text:{
+      type: String,
+      default: 'test',
+    }
+
+  }
 }
 </script>
 

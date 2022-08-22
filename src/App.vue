@@ -1,7 +1,12 @@
 <template>
   <create-top-bar/>
   <div class="draggable">
-    <create-sticker></create-sticker>
+    <create-sticker
+        v-for="(sticker,i) in stickers"
+        :key="i"
+        :title="sticker.title"
+        :text="sticker.text"
+    />
     <create-nav-bar/>
   </div>
 </template>
@@ -13,6 +18,14 @@ import CreateTopBar from "./components/CreateTopBar.vue";
 
 export default {
   name: "App",
+  data(){
+    return{
+      stickers: [{
+        title: 'Tittle',
+        text: 'asdsa',
+      }]
+    }
+  },
   components: {
     CreateSticker,
     CreateNavBar,
