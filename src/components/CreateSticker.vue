@@ -36,6 +36,7 @@ export default {
 .sticker{
   position: absolute;
   overflow: hidden;
+  word-break: break-all;
   width: 250px;
   height: 250px;
   min-width: 100px;
