@@ -38,6 +38,7 @@ export default {
   width: 100%;
   bottom: 50px;
   position: absolute;
+  z-index: 99999;
 
 }
 
@@ -53,7 +54,6 @@ export default {
 .navbar-items{
   display: flex;
   justify-content: center;
-  z-index: 99999;
 }
 
 .center{

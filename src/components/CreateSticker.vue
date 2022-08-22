@@ -1,13 +1,14 @@
 <template>
-  <div class="sticker">
+  <div class="sticker"
+       v-bind:style="{transform: getTransform()}">
     <div class="sticker-out">
       <i class="sticker-del fa fa-close" @click="removeSticker"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
-          <h3>{{title}}</h3>
+          <h3 class="noselect">{{sticker.title}}</h3>
         </div>
         <div class="sticker-body">
-          <p>{{text}}</p>
+          <p class="noselect">{{sticker.text}}</p>
         </div>
       </div>
     </div>
@@ -18,30 +19,34 @@
 export default {
   name: "CreateSticker",
   props: {
-    title:{
-      type: String,
-      default: 'test',
-    },
-    text:{
-      type: String,
-      default: 'test',
-    },
-    remove:{
+    sticker:{
       type: Object,
     }
   },
   methods: {
     removeSticker(){
-      this.$emit('remove-sticker',this.remove)
-      console.log(this.remove)
-    }
+      this.$emit('remove-sticker',this.sticker)
+    },
+    getTransform(){
+      let str = "translate3d(50 + 'px', 50 + 'px', 50 + 'px')";
+      return str;
+    },
   }
 }
 </script>
 
 <style scoped>
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
 
 .sticker{
+  opacity: 0.9;
   position: absolute;
   overflow: hidden;
   word-break: break-all;
@@ -52,7 +57,6 @@ export default {
   max-width: 600px;
   max-height: 600px;
   background-color: aqua;
-  z-index: 100;
   box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
   -webkit-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
   -moz-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);

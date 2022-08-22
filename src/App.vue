@@ -1,13 +1,18 @@
 <template>
   <create-top-bar/>
-  <div class="draggable">
+  <div class="draggable"
+       @mousemove="changePos($event)">
     <create-sticker
         v-for="(sticker,i) in stickers"
         :key="i"
-        :title="sticker.title"
-        :text="sticker.text"
-        :remove="sticker"
+        :sticker="sticker"
+
         @remove-sticker="removeSticker($event)"
+        @mousedown="startDrag($event,sticker)"
+
+        :style="{transform: getTransform(sticker),
+                       zIndex: sticker.zIndex,}"
+
     />
     <create-nav-bar
         @add-sticker="addSticker($event)"
@@ -24,10 +29,15 @@ export default {
   name: "App",
   data(){
     return{
+      lastDragged: null,
       stickers: [{
         title: 'Tittle',
         text: 'asdsa',
         id: 0,
+        x: 40,
+        y: 50,
+        zIndex: 100,
+        dragging: false,
       }]
     }
   },
@@ -47,16 +57,51 @@ export default {
     },
 
     addSticker(sticker){
+      let newId = this.getLastId();
       this.stickers.push({
         title: sticker.title,
         text: sticker.text,
-        id: this.getLastId()
+        id: newId,
+        x: 50,
+        y: 40,
+        zIndex: 100 + newId,
+        dragging: false
       })
     },
 
     removeSticker(obj){
       this.stickers = this.stickers.filter(item => item !== obj)
-    }
+      this.lastDragged = null
+    },
+
+    getTransform(sticker){
+      let str = `translateX(${sticker.x}px) translateY(${sticker.y}px)`
+      return str;
+    },
+
+    startDrag(event,sticker){
+      let ind = this.stickers.findIndex(element => element === sticker)
+      this.lastDragged = ind
+      this.stickers[ind].dragging =true;
+    },
+
+    changePos(event){
+      if (this.lastDragged ===null || !this.stickers[this.lastDragged].dragging)
+        return
+        this.stickers[this.lastDragged].x = event.clientX-(250/2);
+        this.stickers[this.lastDragged].y = event.clientY-(250/2);
+    },
+
+  },
+
+  mounted() {
+    let _this = this;
+    window.addEventListener('mouseup', function(e) {
+      if(_this.lastDragged!==null)
+        _this.stickers[_this.lastDragged].dragging =false;
+    }, );
+
+
   }
 }
 </script>
