@@ -1,0 +1,91 @@
+<template>
+  <div class="sticker" >
+    <i class="sticker-del fa fa-close" @click="removeSticker"></i>
+    <div class="sticker-inside">
+      <div class="sticker-head">
+        <h3>Title</h3>
+      </div>
+      <div class="sticker-body">
+        <p>Text</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "CreateSticker"
+}
+</script>
+
+<style scoped>
+
+.sticker{
+  position: absolute;
+  overflow: hidden;
+  width: 250px;
+  height: 250px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 600px;
+  max-height: 600px;
+  background-color: aqua;
+  z-index: 100;
+  box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
+  -webkit-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
+  -moz-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
+  cursor: grab;
+
+}
+
+.sticker-out:hover .sticker-del{
+  display: block;
+}
+
+.sticker-del{
+  display: none;
+  z-index: 1;
+  cursor: pointer;
+  color: #000000;
+  font-size: 2rem;
+  position: absolute;
+  top: 0;
+  right: 5px;
+}
+
+.sticker-out{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.sticker-inside{
+  position: relative;
+  padding: 7%;
+  height: 86%;
+  overflow-y: auto;
+
+}
+
+.sticker-inside::-webkit-scrollbar {
+  width: 2px;
+}
+
+.sticker-inside::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.sticker-head{
+  font-weight: bold;
+}
+
+.sticker-head h3{
+  margin-top: 5px;
+}
+
+.sticker-body p{
+  margin-bottom: 0;
+}
+
+
+</style>
