@@ -52,8 +52,7 @@ export default {
         return 0
       }
       let index = this.stickers.length - 1
-      let newId = this.stickers[index].id + 1
-      return newId
+      return this.stickers[index].id + 1
     },
 
     addSticker(sticker){
@@ -75,8 +74,7 @@ export default {
     },
 
     getTransform(sticker){
-      let str = `translateX(${sticker.x}px) translateY(${sticker.y}px)`
-      return str;
+      return `translateX(${sticker.x}px) translateY(${sticker.y}px)`;
     },
 
     startDrag(event,sticker){

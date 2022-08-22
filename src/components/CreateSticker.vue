@@ -1,6 +1,5 @@
 <template>
-  <div class="sticker"
-       v-bind:style="{transform: getTransform()}">
+  <div class="sticker">
     <div class="sticker-out">
       <i class="sticker-del fa fa-close" @click="removeSticker"></i>
       <div class="sticker-inside">
@@ -26,10 +25,6 @@ export default {
   methods: {
     removeSticker(){
       this.$emit('remove-sticker',this.sticker)
-    },
-    getTransform(){
-      let str = "translate3d(50 + 'px', 50 + 'px', 50 + 'px')";
-      return str;
     },
   }
 }
@@ -73,7 +68,7 @@ export default {
   z-index: 1;
   cursor: pointer;
   color: #000000;
-  font-size: 2rem;
+  font-size: 2.3rem;
   position: absolute;
   top: 0;
   right: 5px;
