@@ -1,5 +1,5 @@
 <template>
-  <div class="sticker" :class="{dragging: sticker.dragging}">
+  <div class="sticker" :class="{dragging: sticker.dragging, cursor: enabledDragging}">
     <div class="sticker-out">
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
@@ -62,12 +62,15 @@ export default {
   box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
   -webkit-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
   -moz-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
-  cursor: grab;
 
 }
 
 .sticker-out:hover .active{
   display: block;
+}
+
+.cursor:hover{
+  cursor: grab;
 }
 
 .sticker-del{
