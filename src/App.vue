@@ -37,6 +37,9 @@ export default {
       x: null,
       y: null,
       lastDragged: null,
+      offsetX: 0,
+      offsetY: 0,
+
       stickers: [{
         title: 'Tittle',
         text: 'asdsa',
@@ -86,6 +89,10 @@ export default {
 
     startDrag(event,sticker){
       if(this.enabledDragging){
+        let rect = event.target.getBoundingClientRect();
+        this.offsetX = event.clientX - rect.left
+        this.offsetY = event.clientY - rect.top + 50
+
         let ind = this.stickers.findIndex(element => element === sticker)
         this.lastDragged = ind
         this.x =  event.clientX
@@ -108,11 +115,11 @@ export default {
     },
 
     moveX(event){
-      this.stickers[this.lastDragged].x = event.clientX-(250/2)
+      this.stickers[this.lastDragged].x = event.clientX - this.offsetX
       this.x = event.clientX
     },
     moveY(event){
-      this.stickers[this.lastDragged].y = event.clientY-(250/2)
+      this.stickers[this.lastDragged].y = event.clientY - this.offsetY
       this.y = event.clientY
     },
 
