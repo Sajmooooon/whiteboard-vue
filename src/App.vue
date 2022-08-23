@@ -31,6 +31,7 @@ export default {
   name: "App",
   data(){
     return{
+      topBarOffset: 50,
       width: 0,
       height: 0,
       enabledDragging: false,
@@ -91,7 +92,7 @@ export default {
       if(this.enabledDragging){
         let rect = event.target.getBoundingClientRect();
         this.offsetX = event.clientX - rect.left
-        this.offsetY = event.clientY - rect.top + 50
+        this.offsetY = event.clientY - rect.top + this.topBarOffset
 
         let ind = this.stickers.findIndex(element => element === sticker)
         this.lastDragged = ind
@@ -141,7 +142,7 @@ export default {
       }
 
       if(this.y > event.clientY){
-        if(this.checkDragSmaller(sticker.top,50)){
+        if(this.checkDragSmaller(sticker.top,this.topBarOffset)){
           this.moveY(event)
         }
       }
@@ -161,7 +162,7 @@ export default {
   mounted() {
     let draggable = document.querySelector('.draggable')
     this.width = draggable.clientWidth
-    this.height = draggable.clientHeight + 50
+    this.height = draggable.clientHeight + this.topBarOffset
 
     let _this = this;
     window.addEventListener('mouseup', function(e) {
