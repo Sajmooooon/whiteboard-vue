@@ -1,7 +1,7 @@
 <template>
   <div class="sticker">
     <div class="sticker-out">
-      <i class="sticker-del fa fa-close" @click="removeSticker"></i>
+      <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
           <h3 class="noselect">{{sticker.title}}</h3>
@@ -20,6 +20,9 @@ export default {
   props: {
     sticker:{
       type: Object,
+    },
+    enabledDragging:{
+      type: Boolean,
     }
   },
   methods: {
@@ -31,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+.active{
+  display: none;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -59,7 +66,7 @@ export default {
 
 }
 
-.sticker-out:hover .sticker-del{
+.sticker-out:hover .active{
   display: block;
 }
 

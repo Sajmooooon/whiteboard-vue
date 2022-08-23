@@ -6,7 +6,7 @@
         v-for="(sticker,i) in stickers"
         :key="i"
         :sticker="sticker"
-
+        :enabledDragging="enabledDragging"
         @remove-sticker="removeSticker($event)"
         @mousedown="startDrag($event,sticker)"
 
@@ -15,7 +15,9 @@
 
     />
     <create-nav-bar
+        :enabledDragging="enabledDragging"
         @add-sticker="addSticker($event)"
+        @toggle-dragging="toggleDragging"
     />
   </div>
 </template>
@@ -29,6 +31,7 @@ export default {
   name: "App",
   data(){
     return{
+      enabledDragging: false,
       lastDragged: null,
       stickers: [{
         title: 'Tittle',
@@ -78,17 +81,24 @@ export default {
     },
 
     startDrag(event,sticker){
-      let ind = this.stickers.findIndex(element => element === sticker)
-      this.lastDragged = ind
-      this.stickers[ind].dragging =true;
+      if(this.enabledDragging){
+        let ind = this.stickers.findIndex(element => element === sticker)
+        this.lastDragged = ind
+        this.stickers[ind].dragging =true;
+      }
+
     },
 
     changePos(event){
       if (this.lastDragged ===null || !this.stickers[this.lastDragged].dragging)
         return
-        this.stickers[this.lastDragged].x = event.clientX-(250/2);
-        this.stickers[this.lastDragged].y = event.clientY-(250/2);
+      this.stickers[this.lastDragged].x = event.clientX-(250/2);
+      this.stickers[this.lastDragged].y = event.clientY-(250/2);
     },
+
+    toggleDragging(){
+      this.enabledDragging = !this.enabledDragging
+    }
 
   },
 
@@ -106,6 +116,7 @@ export default {
 
 <style>
 .draggable{
+  overflow: hidden;
   position: relative;
   width: 100%;
   height: calc(100vh - 50px );

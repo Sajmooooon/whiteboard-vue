@@ -2,8 +2,8 @@
   <nav class="navbar">
     <div class="navbar-body">
       <ul class="navbar-items">
-        <li class="navbar-item center">
-          <i class="navbar-item-icon center fa fa-hand-grab-o"></i>
+        <li class="navbar-item center" @click="toggleDragging">
+          <i class="navbar-item-icon center fa fa-hand-grab-o" :class="{active: enabledDragging}"></i>
         </li>
         <li class="navbar-item center" @click="createNewSticker">
           <i class="navbar-item-icon center fa fa-plus"></i>
@@ -24,10 +24,17 @@ export default {
       }
     }
   },
+  props:{
+    enabledDragging:{
+      type: Boolean,
+    }
+  },
   methods:{
     createNewSticker(){
       this.$emit('add-sticker',this.newSticker)
-
+    },
+    toggleDragging(){
+      this.$emit('toggle-dragging')
     }
   }
 }
@@ -73,15 +80,18 @@ export default {
   font-size: 1.3rem;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   transition: 0.1s ease-out;
   font-weight: bold;
+  border-radius: 10px;
 }
 .navbar-item-icon:hover{
-  border-radius: 10px;
   background-color: #fae8ff;
   color: #86198f;
 
+}
+.active{
+  background-color: #fae8ff;
+  color: #86198f;
 }
 
 .navbar-item:not(:last-child):after{
