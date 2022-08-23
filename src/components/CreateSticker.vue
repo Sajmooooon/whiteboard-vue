@@ -1,5 +1,5 @@
 <template>
-  <div class="sticker">
+  <div class="sticker" :class="{dragging: sticker.dragging}">
     <div class="sticker-out">
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
