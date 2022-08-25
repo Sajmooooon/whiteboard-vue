@@ -9,7 +9,6 @@
         :enabledDragging="enabledDragging"
         @remove-sticker="removeSticker($event)"
         @mousedown="startDrag($event,sticker)"
-
         :style="{transform: getTransform(sticker),
                        zIndex: sticker.zIndex,}"
 
@@ -49,6 +48,7 @@ export default {
         y: 50,
         zIndex: 100,
         dragging: false,
+        color: 'aqua'
       }]
     }
   },
@@ -75,7 +75,8 @@ export default {
         x: 50,
         y: 40,
         zIndex: 100 + newId,
-        dragging: false
+        dragging: false,
+        color: sticker.color
       })
     },
 
@@ -114,7 +115,6 @@ export default {
         return true
       }
     },
-
     moveX(event){
       this.stickers[this.lastDragged].x = event.clientX - this.offsetX
       this.x = event.clientX
@@ -140,7 +140,6 @@ export default {
           this.moveX(event)
         }
       }
-
       if(this.y > event.clientY){
         if(this.checkDragSmaller(sticker.top,this.topBarOffset)){
           this.moveY(event)
@@ -166,16 +165,18 @@ export default {
 
     let _this = this;
     window.addEventListener('mouseup', function(e) {
-      if(_this.lastDragged!==null)
-        _this.stickers[_this.lastDragged].dragging =false
-    }, );
-
+      if(_this.lastDragged!==null){
+        if(_this.stickers[_this.lastDragged].dragging){
+          _this.stickers[_this.lastDragged].dragging = false
+        }
+      }
+    }, )
 
   }
 }
 </script>
 
-<style>
+<style scoped>
 .draggable{
   overflow: hidden;
   position: relative;
