@@ -4,10 +4,10 @@
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
-          <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging">{{sticker.title}}</span>
+          <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerTitle">{{sticker.title}}</span>
         </div>
         <div class="sticker-body">
-          <span class="noselect sticker-text textarea" spellcheck="false" :contenteditable="!sticker.dragging">{{sticker.text}}</span>
+          <span class="noselect sticker-text textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerText">{{sticker.text}}</span>
         </div>
       </div>
     </div>
@@ -29,6 +29,14 @@ export default {
     removeSticker(){
       this.$emit('remove-sticker',this.sticker)
     },
+    updateStickerText(e){
+      this.sticker.text = e.target.innerText
+      this.$emit('update-sticker',this.sticker)
+    },
+    updateStickerTitle(e){
+      this.sticker.title = e.target.innerText
+      this.$emit('update-sticker',this.sticker)
+    }
   }
 }
 </script>

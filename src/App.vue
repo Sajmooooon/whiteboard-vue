@@ -8,6 +8,7 @@
         :sticker="sticker"
         :enabledDragging="enabledDragging"
         @remove-sticker="removeSticker($event)"
+        @update-sticker="updateSticker($event)"
         @mousedown="startDrag($event,sticker)"
         :style="{transform: getTransform(sticker),
                        zIndex: sticker.zIndex,}"
@@ -83,6 +84,14 @@ export default {
     removeSticker(obj){
       this.stickers = this.stickers.filter(item => item !== obj)
       this.lastDragged = null
+    },
+
+    updateSticker(obj){
+      const ind = this.stickers.findIndex(item=>{
+        return item.id === obj.id
+      })
+      this.stickers[ind].text = obj.text
+      this.stickers[ind].title = obj.title
     },
 
     getTransform(sticker){
