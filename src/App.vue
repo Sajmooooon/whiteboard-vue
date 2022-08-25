@@ -5,7 +5,9 @@
   <div class="draggable" id="test"
        @mouseleave="mouseLeave($event)"
        @mouseenter="mouseEnter($event)"
-       @mousemove="changePos($event)">
+       @mousemove="changePos($event)"
+       @touchmove="changePos($event)"
+  >
     <create-sticker
         v-for="sticker in stickers"
         :key="sticker.id"
@@ -14,6 +16,8 @@
         @remove-sticker="removeSticker($event)"
         @update-sticker="updateSticker($event)"
         @mousedown="startDrag($event,sticker)"
+        @touchstart="startDrag($event,sticker)"
+        @touchend="endDrag($event,sticker)"
         :style="{transform: getTransform(sticker),
                        zIndex: sticker.zIndex,}"
 
@@ -130,16 +134,24 @@ export default {
     startDrag(event,sticker){
       if(this.enabledDragging){
         let rect = event.target.parentElement.getBoundingClientRect();
-        this.offsetX = event.clientX - rect.left
-        this.offsetY = event.clientY - rect.top + this.topBarOffset
+        this.x =  (typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX
+        this.y = (typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY
+        this.offsetX = this.x - rect.left
+        this.offsetY = this.y - rect.top + this.topBarOffset
 
         let ind = this.stickers.findIndex(element => element === sticker)
         this.lastDragged = ind
-        this.x =  event.clientX
-        this.y = event.clientY
+
         this.stickers[ind].dragging = true
       }
 
+    },
+
+    endDrag(event,sticker){
+      if(this.enabledDragging){
+        let ind = this.stickers.findIndex(element => element === sticker)
+        this.stickers[ind].dragging = false
+      }
     },
 
     checkDragSmaller(site,len){
@@ -154,12 +166,13 @@ export default {
       }
     },
     moveX(event){
-      this.stickers[this.lastDragged].x = event.clientX - this.offsetX
-      this.x = event.clientX
+      this.x = (typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX
+      this.stickers[this.lastDragged].x = this.x - this.offsetX
     },
+
     moveY(event){
-      this.stickers[this.lastDragged].y = event.clientY - this.offsetY
-      this.y = event.clientY
+      this.y = (typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY
+      this.stickers[this.lastDragged].y = this.y - this.offsetY
     },
 
     changePos(event){
@@ -167,7 +180,7 @@ export default {
         return
       let sticker = document.querySelector('.dragging').getBoundingClientRect()
 
-      if(this.x > event.clientX){
+      if(this.x > ((typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX)){
         if(this.checkDragSmaller(sticker.left,0)){
           this.moveX(event)
         }
@@ -177,7 +190,7 @@ export default {
           this.moveX(event)
         }
       }
-      if(this.y > event.clientY){
+      if(this.y > ((typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY)){
         if(this.checkDragSmaller(sticker.top,this.topBarOffset)){
           this.moveY(event)
         }
