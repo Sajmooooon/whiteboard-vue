@@ -67,7 +67,6 @@ export default {
   width: 100%;
   overflow: hidden;
   resize: none;
-  min-height: 35px;
   line-height: 20px;
   outline: none;
 

@@ -30,9 +30,9 @@ export default {
 }
 
 input{
-  width: 250px;
+  width: 100%;
   user-select:none;
-  margin: auto 0 auto 25px;
+  margin: auto 20px auto 20px;
   font-size: 1.4em;
   background: transparent;
   border: 0;
