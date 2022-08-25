@@ -3,8 +3,8 @@
     <div class="sticker-out">
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
-          <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerTitle">{{sticker.title}}</span>
-          <span class="noselect sticker-text textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerText">{{sticker.text}}</span>
+          <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerTitle">{{title}}</span>
+          <span class="noselect sticker-text textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerText">{{text}}</span>
       </div>
     </div>
   </div>
@@ -19,6 +19,12 @@ export default {
     },
     enabledDragging:{
       type: Boolean,
+    }
+  },
+  data(){
+    return{
+      title: this.sticker.title,
+      text: this.sticker.text
     }
   },
   methods: {
