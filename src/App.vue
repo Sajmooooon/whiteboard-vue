@@ -100,7 +100,7 @@ export default {
 
     startDrag(event,sticker){
       if(this.enabledDragging){
-        let rect = event.target.getBoundingClientRect();
+        let rect = event.target.parentElement.getBoundingClientRect();
         this.offsetX = event.clientX - rect.left
         this.offsetY = event.clientY - rect.top + this.topBarOffset
 
