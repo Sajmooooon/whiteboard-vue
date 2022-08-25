@@ -3,7 +3,7 @@
       :enabledDragging="enabledDragging"
   />
   <div class="draggable" id="test"
-       @mouseleave="mouseLeave($event)"
+       @mouseleave="mouseLeave"
        @mouseenter="mouseEnter($event)"
        @mousemove="changePos($event)"
        @touchmove="changePos($event)"
@@ -68,27 +68,26 @@ export default {
     CreateTopBar
   },
   methods:{
-    mouseLeave(e){
+
+    mouseLeave(){
       if(this.enabledDragging){
         this.mouseOut = true
       }
     },
 
+    getNewOffset(cursor, half, newOffset1, newOffset2){
+      if(cursor < half){
+        return newOffset1
+      }
+      else{
+        return newOffset2
+      }
+    },
+
     mouseEnter(e){
       if(this.mouseOut){
-        if(e.screenY< this.height/2){
-          this.offsetY = this.topBarOffset
-        }
-        else{
-          this.offsetY = this.topBarOffset + 250
-        }
-
-        if(e.screenX < this.width/2){
-          this.offsetX = 0
-        }
-        else{
-          this.offsetX = 250
-        }
+        this.offsetY = this.getNewOffset(e.screenY, this.height/2, this.topBarOffset, this.topBarOffset+248)
+        this.offsetX = this.getNewOffset(e.screenX, this.width/2, 2, 248)
       }
     },
 
@@ -101,7 +100,7 @@ export default {
     },
 
     addSticker(sticker){
-      let newId = this.getLastId();
+      let newId = this.getLastId()
       this.stickers.push({
         title: sticker.title,
         text: sticker.text,
@@ -128,14 +127,14 @@ export default {
     },
 
     getTransform(sticker){
-      return `translateX(${sticker.x}px) translateY(${sticker.y}px)`;
+      return `translateX(${sticker.x}px) translateY(${sticker.y}px)`
     },
 
-    startDrag(event,sticker){
+    startDrag(e,sticker){
       if(this.enabledDragging){
-        let rect = event.target.parentElement.getBoundingClientRect();
-        this.cursorX =  (typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX
-        this.cursorY = (typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY
+        let rect = e.target.parentElement.getBoundingClientRect()
+        this.cursorX =  (typeof e.clientX =="number") ? e.clientX : e.touches[0].clientX
+        this.cursorY = (typeof e.clientY =="number") ? e.clientY : e.touches[0].clientY
         this.offsetX = this.cursorX - rect.left
         this.offsetY = this.cursorY - rect.top + this.topBarOffset
 
@@ -147,7 +146,7 @@ export default {
 
     },
 
-    endDrag(event,sticker){
+    endDrag(e,sticker){
       if(this.enabledDragging){
         let ind = this.stickers.findIndex(element => element === sticker)
         this.stickers[ind].dragging = false
@@ -155,49 +154,50 @@ export default {
     },
 
     checkDragSmaller(site,len){
-      if(site>=len){
+      if(site >= len){
         return true
       }
     },
 
     checkDragHigher(site,len){
-      if(site<=len){
+      if(site <= len){
         return true
       }
     },
-    moveX(event){
-      this.cursorX = (typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX
+
+    moveX(e){
+      this.cursorX = (typeof e.clientX === "number") ? e.clientX : e.touches[0].clientX
       this.stickers[this.lastDragged].x = this.cursorX - this.offsetX
     },
 
-    moveY(event){
-      this.cursorY = (typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY
+    moveY(e){
+      this.cursorY = (typeof e.clientY === "number") ? e.clientY : e.touches[0].clientY
       this.stickers[this.lastDragged].y = this.cursorY - this.offsetY
     },
 
-    changePos(event){
+    changePos(e){
       if (this.lastDragged ===null || !this.stickers[this.lastDragged].dragging)
         return
       let sticker = document.querySelector('.dragging').getBoundingClientRect()
 
-      if(this.cursorX > ((typeof event.clientX =="number") ? event.clientX : event.touches[0].clientX)){
+      if(this.cursorX > ((typeof e.clientX =="number") ? e.clientX : e.touches[0].clientX)){
         if(this.checkDragSmaller(sticker.left,0)){
-          this.moveX(event)
+          this.moveX(e)
         }
       }
       else{
         if(this.checkDragHigher(sticker.right,this.width)){
-          this.moveX(event)
+          this.moveX(e)
         }
       }
-      if(this.cursorY > ((typeof event.clientY =="number") ? event.clientY : event.touches[0].clientY)){
+      if(this.cursorY > ((typeof e.clientY =="number") ? e.clientY : e.touches[0].clientY)){
         if(this.checkDragSmaller(sticker.top,this.topBarOffset)){
-          this.moveY(event)
+          this.moveY(e)
         }
       }
       else{
         if(this.checkDragHigher(sticker.bottom,this.height)){
-          this.moveY(event)
+          this.moveY(e)
         }
       }
     },
@@ -214,8 +214,8 @@ export default {
     this.height = draggable.clientHeight + this.topBarOffset
 
     let _this = this;
-    window.addEventListener('mouseup', function(e) {
-      if(_this.lastDragged!==null){
+    window.addEventListener('mouseup', function() {
+      if(_this.lastDragged !== null){
         if(_this.stickers[_this.lastDragged].dragging){
           _this.stickers[_this.lastDragged].dragging = false
         }
