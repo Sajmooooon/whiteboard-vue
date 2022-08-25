@@ -1,12 +1,17 @@
 <template>
   <header class="top-nav">
-    <h1>Jane's 1st whiteboard</h1>
+    <input value="1st whiteboard" :disabled="enabledDragging">
   </header>
 </template>
 
 <script>
 export default {
-  name: "CreateTopBar"
+  name: "CreateTopBar",
+  props:{
+    enabledDragging:{
+      type: Boolean,
+    }
+  }
 }
 </script>
 
@@ -24,8 +29,21 @@ export default {
   display: flex;
 }
 
-.top-nav h1{
+input{
+  width: 250px;
+  user-select:none;
   margin: auto 0 auto 25px;
-  font-size: 1.7em;
+  font-size: 1.4em;
+  background: transparent;
+  border: 0;
+
+}
+input:focus{
+  outline: none;
+  border-bottom: #888888 1px solid;
+}
+
+input:disabled {
+  pointer-events:none;
 }
 </style>

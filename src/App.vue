@@ -1,5 +1,7 @@
 <template>
-  <create-top-bar/>
+  <create-top-bar
+      :enabledDragging="enabledDragging"
+  />
   <div class="draggable" id="test"
        @mousemove="changePos($event)">
     <create-sticker
