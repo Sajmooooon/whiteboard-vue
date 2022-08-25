@@ -3,6 +3,8 @@
       :enabledDragging="enabledDragging"
   />
   <div class="draggable" id="test"
+       @mouseleave="mouseLeave($event)"
+       @mouseenter="mouseEnter($event)"
        @mousemove="changePos($event)">
     <create-sticker
         v-for="sticker in stickers"
@@ -33,6 +35,7 @@ export default {
   name: "App",
   data(){
     return{
+      mouseOut: false,
       topBarOffset: 50,
       width: 0,
       height: 0,
@@ -61,6 +64,30 @@ export default {
     CreateTopBar
   },
   methods:{
+    mouseLeave(e){
+      if(this.enabledDragging){
+        this.mouseOut = true
+      }
+    },
+
+    mouseEnter(e){
+      if(this.mouseOut){
+        if(e.screenY< this.height/2){
+          this.offsetY = this.topBarOffset
+        }
+        else{
+          this.offsetY = this.topBarOffset + 250
+        }
+
+        if(e.screenX < this.width/2){
+          this.offsetX = 0
+        }
+        else{
+          this.offsetX = 250
+        }
+      }
+    },
+
     getLastId(){
       if(!this.stickers.length){
         return 0
@@ -144,7 +171,6 @@ export default {
         if(this.checkDragSmaller(sticker.left,0)){
           this.moveX(event)
         }
-
       }
       else{
         if(this.checkDragHigher(sticker.right,this.width)){
