@@ -80,6 +80,7 @@ export default {
 .sticker-title{
   font-weight: bold;
   font-size: 22px;
+  margin-top: 15px;
   margin-bottom: 10px;
 }
 
