@@ -3,8 +3,8 @@
   <div class="draggable" id="test"
        @mousemove="changePos($event)">
     <create-sticker
-        v-for="(sticker,i) in stickers"
-        :key="i"
+        v-for="sticker in stickers"
+        :key="sticker.id"
         :sticker="sticker"
         :enabledDragging="enabledDragging"
         @remove-sticker="removeSticker($event)"
