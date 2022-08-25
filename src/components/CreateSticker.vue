@@ -4,10 +4,10 @@
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
         <div class="sticker-head">
-          <h3 class="noselect">{{sticker.title}}</h3>
+          <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging">{{sticker.title}}</span>
         </div>
         <div class="sticker-body">
-          <p class="noselect">{{sticker.text}}</p>
+          <span class="noselect sticker-text textarea" spellcheck="false" :contenteditable="!sticker.dragging">{{sticker.text}}</span>
         </div>
       </div>
     </div>
@@ -34,6 +34,32 @@ export default {
 </script>
 
 <style scoped>
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: none;
+  min-height: 35px;
+  line-height: 20px;
+  outline: none;
+
+}
+
+.textarea:focus{
+  border-bottom: #888888 1px solid;
+}
+
+.sticker-title{
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.sticker-text{
+  font-size: 17px;
+}
+
 .active{
   display: none;
 }
