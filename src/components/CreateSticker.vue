@@ -1,6 +1,6 @@
 <template>
-  <div class="sticker" :class="{dragging: sticker.dragging, cursor: enabledDragging}, sticker.color">
-    <div class="sticker-out">
+  <div class="sticker" :class="{dragging: sticker.dragging, cursor: enabledDragging}">
+    <div class="sticker-out" :class="sticker.color">
       <i class="sticker-del fa fa-close" :class="{active: !enabledDragging}" @click="removeSticker"></i>
       <div class="sticker-inside">
           <span class="noselect sticker-title textarea" spellcheck="false" :contenteditable="!sticker.dragging" @keyup="updateStickerTitle">{{title}}</span>
@@ -91,7 +91,7 @@ export default {
   display: none;
 }
 
-.noselect {
+.noselect{
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -111,11 +111,9 @@ export default {
   min-height: 100px;
   max-width: 600px;
   max-height: 600px;
-  /*background-color: aqua;*/
-  box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
-  -webkit-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
-  -moz-box-shadow: 10px 10px 5px -5px rgba(212,212,212,0.75);
-
+  box-shadow: 10px 10px 5px -5px rgba(150,150,150,0.9);
+  -webkit-box-shadow: 10px 10px 5px -5px rgba(150,150,150,0.9);
+  -moz-box-shadow: 10px 10px 5px -5px rgba(150,150,150,0.9);
 }
 
 .sticker-out:hover .active{
@@ -158,18 +156,5 @@ export default {
 .sticker-inside::-webkit-scrollbar-thumb {
   background: #888;
 }
-
-.sticker-head{
-  font-weight: bold;
-}
-
-.sticker-head h3{
-  margin-top: 5px;
-}
-
-.sticker-body p{
-  margin-bottom: 0;
-}
-
 
 </style>

@@ -49,16 +49,33 @@ export default {
       lastDragged: null,
       offsetX: 0,
       offsetY: 0,
+      colors: ['purple', 'aqua', 'rubineRed', 'green', 'teal'],
+
+      drag: {
+        type: '',
+        x: 50,
+        y: 40,
+        id: 0,
+        zIndex: 100,
+        dragging: false,
+      },
+
+      sticker: {
+        title: 'New Sticker Title',
+        text: 'New Sticker Text',
+        color: ''
+      },
 
       stickers: [{
-        title: 'Tittle',
+        title: 'Title',
         text: 'text',
+        color: 'aqua',
+        type: 'sticker',
         id: 0,
         x: 40,
         y: 50,
         zIndex: 100,
-        dragging: false,
-        color: 'aqua'
+        dragging: false
       }]
     }
   },
@@ -99,18 +116,20 @@ export default {
       return this.stickers[index].id + 1
     },
 
-    addSticker(sticker){
+    generateColor(){
+      return this.colors[Math.floor(Math.random()*(this.colors.length))]
+    },
+
+    addSticker(type){
       let newId = this.getLastId()
-      this.stickers.push({
-        title: sticker.title,
-        text: sticker.text,
-        id: newId,
-        x: 50,
-        y: 40,
-        zIndex: 100 + newId,
-        dragging: false,
-        color: sticker.color
-      })
+      if(type === "sticker"){
+        let newSticker = Object.assign({},this.sticker, this.drag)
+        newSticker.id = newId
+        newSticker.zIndex = 100 + newId
+        newSticker.type = type
+        newSticker.color = this.generateColor()
+        this.stickers.push(newSticker)
+      }
     },
 
     removeSticker(obj){

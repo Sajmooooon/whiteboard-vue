@@ -5,7 +5,7 @@
         <li class="navbar-item center" @click="toggleDragging">
           <i class="navbar-item-icon center fa fa-hand-grab-o" :class="{active: enabledDragging}"></i>
         </li>
-        <li class="navbar-item center" @click="createNewSticker">
+        <li class="navbar-item center" @click="createNewSticker('sticker')">
           <i class="navbar-item-icon center fa fa-plus"></i>
         </li>
       </ul>
@@ -16,31 +16,17 @@
 <script>
 export default {
   name: "CreateNavBar",
-  data(){
-    return{
-      colors: ['purple', 'aqua', 'rubineRed', 'green','teal'],
-      newSticker: {
-        title: 'New Sticker Title',
-        text: 'New Sticker Text',
-        color: 'purple',
-      },
-    }
-  },
   props:{
     enabledDragging:{
       type: Boolean,
     }
   },
   methods:{
-    createNewSticker(){
-      this.newSticker.color = this.generateColor()
-      this.$emit('add-sticker',this.newSticker)
+    createNewSticker(type){
+      this.$emit('add-sticker',type)
     },
     toggleDragging(){
       this.$emit('toggle-dragging')
-    },
-    generateColor(){
-      return this.colors[Math.floor(Math.random()*(this.colors.length))]
     }
   }
 }
