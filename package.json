@@ -1,7 +1,6 @@
 {
   "name": "whiteboard",
-  "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Interactive application that works like a Whiteboard with Stickers.",
   "author": "Simon Youssef",
   "type": "module",
